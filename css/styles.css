@@ -1,0 +1,58 @@
+
+
+header{
+    background-color: white;
+    color: black;
+    text-align: center;
+    border: 1px solid black;
+    width: 100%;
+}
+
+header h1{
+    text-align: left;
+
+}
+
+nav ul{
+    text-align: right;
+    list-style-type: none;
+    padding: 0;
+   
+}
+
+nav ul li{
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a{
+    color: black;
+    text-decoration: none;
+    display: inline-block;
+    padding: 10px;
+    background-color: grey;
+}
+main{
+    border: 1px solid black;
+}
+
+.container{
+    display: flex;
+}
+
+.sidebar {
+    width: 400px; /* Adjust as needed */
+    background-color: #f2f2f2; /* Light grey background this for sizing modification ill delete this later. */
+    padding: 20px;
+  }
+  .main-content {
+    flex-grow: 1; /* Takes up remaining space */
+    display: flex;
+    padding: 10px;
+    margin-left: 40px;
+
+  }
+  .main-content img {
+    width: 1000px; 
+    height: 500px; 
+  }
