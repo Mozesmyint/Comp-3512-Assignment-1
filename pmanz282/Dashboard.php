@@ -39,7 +39,7 @@ require_once('db-classes.inc.php');
                 echo "No driverRef";
             }
         } catch (PDOException $e){
-            die($e->getMessage);
+            die($e->getMessage());
         }
     ?>
         </div>
