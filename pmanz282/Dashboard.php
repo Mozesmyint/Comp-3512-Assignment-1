@@ -1,5 +1,6 @@
-
 <?php 
+require_once('Config.inc.php');
+require_once('db-classes.inc.php');
 
 try{
     $pdo = new PDO (DBCONNSTRING, DBUSER, DBPASS);
@@ -23,3 +24,15 @@ catch (PDOException $e){
     die($e->getMessage);
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Dashboard Project</title>
+</head>
+<body>
+    
+</body>
+</html>
