@@ -11,6 +11,9 @@ header("Access-Control-Allow-Origin: *");
 try{
     $conn = $DatabaseHelper::createConnection(array(DBCONNSTRING, 
     DBUSER, DBPASS));
+    //returns drivers for a season
+
+    //returns driver specified ['driverRef']
 
     // echo json_encode();
 }catch(Exception $e){}

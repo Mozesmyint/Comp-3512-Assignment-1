@@ -11,16 +11,9 @@ header("Access-Control-Allow-Origin: *");
 try{
     $conn = $DatabaseHelper::createConnection(array(DBCONNSTRING, 
     DBUSER, DBPASS));
-    /**Don't use foreign keys for race driver and constructor
-     * instead use the following fields 
-     * driver (driverRef, code, forename, surname)
-     * race (name, round, year, data)
-     * constructor (name, constructorRef, nationalilty
-     * SORT BY grid (ASCENDING 1st place first, seconds place)
-     */
-    //retuns results from specified race
-
-    //returns results for a given driver
+    //returns specified race using curcuit name,location,country
+    
+    //returns races from (season)2022 order by round
 
     // echo json_encode();
 }catch(Exception $e){}

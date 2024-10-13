@@ -11,6 +11,9 @@ header("Access-Control-Allow-Origin: *");
 try{
     $conn = $DatabaseHelper::createConnection(array(DBCONNSTRING, 
     DBUSER, DBPASS));
+    //returns constructors for a season
+
+    //returns specified constructor $_POST['constructorRef']
 
     // echo json_encode();
 }catch(Exception $e){}

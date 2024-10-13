@@ -11,6 +11,10 @@ header("Access-Control-Allow-Origin: *");
 try{
     $conn = $DatabaseHelper::createConnection(array(DBCONNSTRING, 
     DBUSER, DBPASS));
+    //returns circuts for a season
+
+    //returns specified circuit $_POST['circuitRef']
+    
 
     // echo json_encode();
 }catch(Exception $e){}
