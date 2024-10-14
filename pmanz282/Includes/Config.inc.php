@@ -3,5 +3,9 @@ define('DBHOST', 'localhost');
 define('DBNAME', 'f1');
 define('DBUSER', 'root');
 define('DBPASS', '');
-define('DBCONNSTRING','sqlite:pmanz282\data\f1.db');
+
+//makes the file path similar to an absolute path
+//Resource from
+define('DBCONNSTRING', 'sqlite:' . __DIR__ . '/../data/f1.db');
+
 ?>

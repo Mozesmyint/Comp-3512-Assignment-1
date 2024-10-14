@@ -1,6 +1,6 @@
 <?php
-require_once 'pmanz282\Includes\Config.inc.php';
-require_once 'pmanz282\Includes\db-classes.inc.php';
+require_once './Includes/Config.inc.php';
+require_once './Includes/db-classes.inc.php';
 
 try{
     $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);

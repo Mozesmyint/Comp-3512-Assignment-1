@@ -37,7 +37,8 @@ class DatabaseHelper {
 
    } 
 class DriversDB{
-   private static $baseSQL = "SELECT * FROM drivers";
+   private static $baseSQL = 
+   "SELECT * FROM Drivers ";
    private $pdo;
    public function __construct($connection){
       $this->pdo = $connection;
@@ -48,6 +49,23 @@ class DriversDB{
          DatabaseHelper::runQuery($this->pdo, $sql, null); 
       return $statement->fetchAll(); 
       } 
+   public function getOneForDriverRef($identifier){
+      $sql = self::$baseSQL . " WHERE Drivers.driverRef LIKE ?"; 
+      $statement = DatabaseHelper::runQuery($this->pdo, $sql, $identifier);
+
+
+      return $statement->fetch(PDO::FETCH_ASSOC); 
+   }
+   public function getAllForRaceId($identifier){
+      $sql = self::$baseSQL .= 
+      "INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
+      INNER JOIN Races ON Qualifying.raceId = Races.raceId
+      INNER JOIN ConstructorResults ON ConstructorResults.constructorId =  Qualifying.constructorId
+      INNER JOIN Seasons ON Races.year = Seasons.year
+      WHERE Races.raceId = ?";
+      $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($identifier));
+      return $statement->fetchAll(PDO::FETCH_ASSOC);
+   }
 }
 class ConstructorsDB{
    private static $baseSQL = "SELECT * FROM constructors";
