@@ -19,12 +19,12 @@ require_once './Includes/db-helpers.inc.php';
 
             //returns drivers for a season
             $driverGateway = new DriversDB($conn);
-
+            
             if(isset($_GET['driverRef'])){
                 $driver = $driverGateway->getOneForDriverRef($_GET['driverRef']);
             }
-            if(isset($_GET['raceId']) && isset($_GET['year'])){
-                $raceResults = $driverGateway->getAllForRaceId($_GET['raceId']);
+            if(isset($_GET['race'])){
+                $raceResults = $driverGateway->getAllForRace($_GET['race']);
             }
             
         
@@ -54,7 +54,7 @@ require_once './Includes/db-helpers.inc.php';
         <div class="section">
             <h2>Race Results</h2>
                 <?php
-                    if(isset($_GET['raceId'])){
+                    if(isset($_GET['race'])){
                         if(count($raceResults) > 0){
                             displayAllRaceResults($raceResults);
                         }
