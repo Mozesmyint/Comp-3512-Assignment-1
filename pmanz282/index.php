@@ -41,11 +41,11 @@
         <h2>F1 Dashboard Project</h2>
         <nav>
             <!-- Home button -->
-            <a href="DriverPage.php"> <!--To be changed when page is made-->
+            <a href="index.php">
                 Home
             </a>
             <!-- Browse button -->
-            <a href="DriverPage.php"> <!--To be changed when page is made-->
+            <a href="Browse.php">
                 Browse
             </a>
             <!-- APIs button -->
