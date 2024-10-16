@@ -52,7 +52,7 @@ class DriversDB{
       $statement = 
          DatabaseHelper::runQuery($this->pdo, $sql, null); 
       return $statement->fetchAll(); 
-      } 
+   } 
    public function getOneForDriverRef($identifier){
       $sql = self::$baseSQL . " WHERE Drivers.driverRef LIKE ? AND Races.year = 2023"; 
       $statement = DatabaseHelper::runQuery($this->pdo, $sql, $identifier);
