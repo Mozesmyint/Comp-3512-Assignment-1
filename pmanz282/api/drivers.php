@@ -25,7 +25,7 @@ try{
 
     //returns drivers for the season (2022)
     }else{
-        $result = $driverGateway->getAllDriverForSeason();
+        // $result = $driverGateway->getAllDriverForSeason();
     } 
     
     echo json_encode( $result, JSON_NUMERIC_CHECK );

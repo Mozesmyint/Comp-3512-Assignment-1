@@ -47,15 +47,11 @@ class DriversDB{
    public function __construct($connection){
       $this->pdo = $connection;
    }
-   public function getAllDriverForSeason() { 
-      $sql = 
-      "SELECT Drivers.forename, Drivers.surname, Drivers.driverRef FROM Drivers
-      INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
-      INNER JOIN Races ON Qualifying.raceId = Races.raceId
-      INNER JOIN Seasons ON Races.year = Seasons.year
-      WHERE Seasons.year = 2022"; 
-      $statement = DatabaseHelper::runQuery($this->pdo, $sql, null); 
-      return $statement->fetchAll(PDO::FETCH_ASSOC); 
+   public function getAll() { 
+      $sql = self::$baseSQL; 
+      $statement = 
+         DatabaseHelper::runQuery($this->pdo, $sql, null); 
+      return $statement->fetchAll(); 
       } 
    public function getOneForDriverRef($identifier){
       $sql = self::$baseSQL . " WHERE Drivers.driverRef LIKE ? AND Races.year = 2023"; 
@@ -65,9 +61,22 @@ class DriversDB{
       return $statement->fetch(PDO::FETCH_ASSOC); 
    }
    public function getAllForRace($identifier){
-      $sql = self::$baseSQL .= 
-      "WHERE Races.raceId = ? AND Races.year = 2023";
-      $statement = DatabaseHelper::runQuery($this->pdo, $sql, Array($identifier));
+      //Inspiration to use Distinct: https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_distinct
+      $sql = 
+     "SELECT DISTINCT Races.round, Circuits.name, Qualifying.position, MAX(ConstructorResults.points) AS MAX_POINTS
+      FROM Drivers
+            INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
+            INNER JOIN Races ON Qualifying.raceId = Races.raceId
+            INNER JOIN Circuits ON Circuits.circuitId = Races.circuitId
+            INNER JOIN ConstructorResults ON Races.raceId = ConstructorResults.raceId
+            INNER JOIN Seasons ON Races.year = Seasons.year
+      WHERE 
+         Races.year = 2023 AND Drivers.driverRef = ?
+      GROUP BY Races.round, Circuits.name, Qualifying.position 
+      ORDER BY Races.round";
+      //If using DISTINCT, values in select must be repeated in group by or aggregated
+
+      $statement = DatabaseHelper::runQuery($this->pdo, $sql, $identifier);
       return $statement->fetchAll(PDO::FETCH_ASSOC);
    }
 }

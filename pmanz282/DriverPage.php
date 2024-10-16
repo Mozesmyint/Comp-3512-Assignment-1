@@ -22,9 +22,7 @@ require_once './Includes/db-helpers.inc.php';
             
             if(isset($_GET['driverRef'])){
                 $driver = $driverGateway->getOneForDriverRef($_GET['driverRef']);
-            }
-            if(isset($_GET['race'])){
-                $raceResults = $driverGateway->getAllForRace($_GET['race']);
+                $raceResults = $driverGateway->getAllForRace($_GET['driverRef']);
             }
             
         
@@ -54,7 +52,7 @@ require_once './Includes/db-helpers.inc.php';
         <div class="section">
             <h2>Race Results</h2>
                 <?php
-                    if(isset($_GET['race'])){
+                    if(isset($_GET['driverRef'])){
                         if(count($raceResults) > 0){
                             displayAllRaceResults($raceResults);
                         }

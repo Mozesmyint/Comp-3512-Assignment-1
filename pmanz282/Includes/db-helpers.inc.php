@@ -30,7 +30,7 @@ function displayAllRaceResults($results){
                 echo "<td>".$r['round']."</td>";
                 echo "<td>".$r['name']."</td>";
                 echo "<td>".$r['position']."</td>";
-                echo "<td>".$r['points']."</td>"; //not finished must implement Constructor for points value
+                echo "<td>".$r['MAX_POINTS']."</td>";  //look at db-classes.inc.php L69 for debugging, name = nickname
             echo "</tr>";
     }
         echo "</tbody>";
