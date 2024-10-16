@@ -81,7 +81,7 @@ class DriversDB{
    }
 }
 class ConstructorsDB{
-   private static $baseSQL = "SELECT * FROM constructors";
+   private static $baseSQL = "SELECT ? FROM constructors";
    private $pdo;
    public function __construct($connection){
       $this->pdo = $connection;
@@ -91,7 +91,10 @@ class ConstructorsDB{
       $statement = 
          DatabaseHelper::runQuery($this->pdo, $sql, null); 
       return $statement->fetchAll(); 
-      } 
+      }
+   public function getALLRaceResultsForDriver($sqlSelect, $constructorRef){
+
+   }
 }
 class CircuitsDB{
    private static $baseSQL = "SELECT * FROM circuits";

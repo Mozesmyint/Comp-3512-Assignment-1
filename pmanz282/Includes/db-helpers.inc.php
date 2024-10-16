@@ -41,5 +41,10 @@ function displayAllRaceResults($results){
         echo "</tbody>";
     echo "</table>";
 }
+function displayDriverConstructor($d){
+    echo "<p> Name: ".$d['forename']." ".$d['surname']."</p>";
+    echo "<p> Nationality: ".$d['nationality']."</p>";
+    echo "<p> Url: ".$d['url']."</p>";
+}
 
 ?>
