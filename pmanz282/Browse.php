@@ -60,12 +60,21 @@ $raceGateway = new RacesDB($conn);
             if(isset($_GET['raceId'])){
                 $raceId = $_GET['raceId'];
 
-                $results = $raceGateway->getAllUniqRaces();
+                $resultsGateway = new ResultsDB($conn);
+                $results = $resultsGateway->getAll($raceId);
 
                 if($results && count($results) > 0){ 
                     echo '<h2>Results for ' . $results[0]['name'] . '</h2>';
 
                     echo '<h3>Qualifying</h3>';
+                    echo '<table>';
+                    echo '<thead><tr><th>Pos</th><th>Driver</th><th>Constructor</th><th>Q2</th><th>Q3</th></tr></thead>';
+                    echo '<tbody>';
+                    foreach ($results as $r){
+                        echo '<tr>';
+                        echo '<td>' . $r['positionOrder'] . '</td>';
+                        echo '<td><a href="driverPage.php?driverRef=' . $r['surname'] . '">'. $r['forename'] . " " . $r['surname'] . '</a></td>';
+                    }
                 }
             }
             ?>
