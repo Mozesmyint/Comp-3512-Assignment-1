@@ -20,14 +20,13 @@ require_once './Includes/db-helpers.inc.php';
             //returns drivers for a season
             $driverGateway = new DriversDB($conn);
             $constructorGateway = new ConstructorsDB($conn);
-            
-            if(isset($_GET['driverRef'])){
-                $driver = $driverGateway->getOneForDriverRef($_GET['driverRef']);
-                $raceResults = $driverGateway->getAllForRace($_GET['driverRef']);
+
+            if(isset($_GET['constructorRef'])){
+                $construct = $constructorGateway->getALLConstructorDetails($_GET['constructorRef']);
             }
-            if(isset($_GET['constructorId'])){
-                $construct = $constructorGateway->getALLRaceResultsForDriver(
-                    $_GET['driverRef'], $_GET['constructorId']);
+            if(isset($_GET['constructorRef']) && isset($_GET['driverRef'])){
+                $constructRaceDetails = $constructorGateway
+                ->getALLRaceResultsForConstructor($_GET['driverRef'],$_GET['constructorRef'] );
             }
         
         } catch (PDOException $e){
@@ -41,12 +40,11 @@ require_once './Includes/db-helpers.inc.php';
             <h2>Constructor Details</h2>
             <p>
                 <?php
-                    if(isset($_GET['driverRef'])){
-                        if(count($driver) > 0){
-                            
-                            displayDriverConstructor($driver);
+                    if(isset($_GET['constructorRef'])){
+                        if(count($construct) > 0){
+                            displayConstructorDetails($construct);
                         }else{
-                          echo "no driver found with search term = " . $_GET['driverRef'];
+                          echo "no driver found with search term = " . $_GET['constructorRef'];
                         }
                       }else{
                         echo "Enter a search term and press Filter";
@@ -57,9 +55,9 @@ require_once './Includes/db-helpers.inc.php';
         <div class="section">
             <h2>Race Results</h2>
                 <?php
-                    if(isset($_GET['constructorId'])){
-                        if(count($raceResults) > 0){
-                            displayConstructorAllRaceResults($construct);
+                    if(isset($_GET['constructorId']) && isset($_GET['driverRef'])){
+                        if(count($constructRaceDetails) > 0){
+                            displayALLRaceResultsConstructor($constructRaceDetails);
                         }
                       }else{
                         echo "error";

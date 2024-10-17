@@ -41,7 +41,7 @@ function displayAllRaceResults($results){
         echo "</tbody>";
     echo "</table>";
 }
-function displayConstructorAllRaceResults($results){
+function displayALLRaceResultsConstructor($results){
     echo "<table>";
     echo "<thead>";
         echo "<tr>";
@@ -57,7 +57,7 @@ function displayConstructorAllRaceResults($results){
             echo "<tr>";
                 echo "<td>".$r['round']."</td>";
                 echo "<td>".$r['name']."</td>";
-                echo "<td>".$r['forename']." ".$r['surname']."</td>";
+                // echo "<td>".$r['forename']." ".$r['surname']."</td>";
                 echo "<td>".$r['pos']."</td>";
                 echo "<td>".$r['MAX_POINTS']."</td>";  //look at db-classes.inc.php L69 for debugging, name = nickname
             echo "</tr>";
@@ -65,8 +65,8 @@ function displayConstructorAllRaceResults($results){
         echo "</tbody>";
     echo "</table>";
 }
-function displayDriverConstructor($d){
-    echo "<p> Name: ".$d['forename']." ".$d['surname']."</p>";
+function displayConstructorDetails($d){
+    echo "<p> Name: ".$d['name']."</p>";
     echo "<p> Nationality: ".$d['nationality']."</p>";
     echo '<p> Url: <a href="'.$d['url'].'">' . $d['url'] .'</a></p>';
 }
