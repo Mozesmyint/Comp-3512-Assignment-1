@@ -7,6 +7,8 @@ $conn = DatabaseHelper::createConnection(array(DBCONNSTRING, DBUSER, DBPASS));
 
 $raceStmt = $conn->query("SELECT raceId, round, name from Races WHERE year = 2022;");
 $race = $raceStmt;
+
+$raceGateway = new RacesDB($conn);
 ?>
 
 <!DOCTYPE html>
@@ -51,6 +53,22 @@ $race = $raceStmt;
                     }
                 ?>
             </ul>
+        </div>
+
+        <div class="rightcolumn">
+            <?php 
+            if(isset($_GET['raceId'])){
+                $raceId = $_GET['raceId'];
+
+                $results = $raceGateway->getAllUniqRaces();
+
+                if($results && count($results) > 0){ 
+                    echo '<h2>Results for ' . $results[0]['name'] . '</h2>';
+
+                    echo '<h3>Qualifying</h3>';
+                }
+            }
+            ?>
         </div>
     </div>
 </body>
