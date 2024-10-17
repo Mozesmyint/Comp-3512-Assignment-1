@@ -8,7 +8,7 @@ function displayDriver($d){
         echo "<p> Date of Birth: ".$d['dob']."</p>";
         echo "<p> Age: ".calcAge($d['dob'])."</p>";
         echo "<p> Nationality: ".$d['nationality']."</p>";
-        echo "<p> Url: ".$d['url']."</p>";
+        echo '<p> Url: <a href="'.$d['url'].'">' . $d['url'] .'</a></p>';
 }
 function calcAge($dob){ //not finished, implement age in displayDriver
     //Inspiration from: https://stackoverflow.com/questions/64003/how-do-i-use-php-to-get-the-current-year
@@ -44,7 +44,7 @@ function displayAllRaceResults($results){
 function displayDriverConstructor($d){
     echo "<p> Name: ".$d['forename']." ".$d['surname']."</p>";
     echo "<p> Nationality: ".$d['nationality']."</p>";
-    echo "<p> Url: ".$d['url']."</p>";
+    echo '<p> Url: <a href="'.$d['url'].'">' . $d['url'] .'</a></p>';
 }
 
 ?>
