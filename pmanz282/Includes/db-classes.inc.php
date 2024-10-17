@@ -24,6 +24,14 @@ class DatabaseHelper {
        } 
        // Use a prepared statement if parameters 
        $statement = $connection->prepare($sql); 
+
+
+         
+         //binding parameters to sql (?)
+         for($i=0;$i<count($parameters);$i++){
+            $statement->bindValue($i+1, $parameters[$i]);
+      }
+
        $executedOk = $statement->execute($parameters); 
    
        if (! $executedOk) throw new PDOException; 
@@ -81,7 +89,8 @@ class DriversDB{
    }
 }
 class ConstructorsDB{
-   private static $baseSQL = "SELECT ? FROM constructors";
+   private static $baseSQL = 
+   "SELECT * FROM ConstructorResults";
    private $pdo;
    public function __construct($connection){
       $this->pdo = $connection;
@@ -89,11 +98,22 @@ class ConstructorsDB{
    public function getAll() { 
       $sql = self::$baseSQL; 
       $statement = 
-         DatabaseHelper::runQuery($this->pdo, $sql, null); 
-      return $statement->fetchAll(); 
+         DatabaseHelper::runQuery($this->pdo, $sql, null ); 
+      return $statement->fetchAll(PDO::FETCH_ASSOC); 
       }
-   public function getALLRaceResultsForDriver($sqlSelect, $constructorRef){
-
+   public function getALLRaceResultsForDriver($driverRef ,$constructorRef){
+      $sql = 
+      "Select Races.round, Races.name, MAX(Results.position) AS pos, MAX(ConstructorResults.points) AS MAX_POINTS FROM ConstructorResults
+         INNER JOIN Races ON ConstructorResults.raceId = Races.raceId
+         INNER JOIN Results ON ConstructorResults.raceId = Results.raceId
+         INNER JOIN Drivers ON Results.driverId = Drivers.driverId
+         INNER JOIN Seasons ON Races.year = Seasons.year
+         WHERE Drivers.driverRef= ? AND 
+      ConstructorResults.constructorId = ? AND Seasons.year = 2023
+      GROUP BY Races.round, Races.name ORDER BY Races.round
+      ";
+      $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($driverRef, $constructorRef));
+      return $statement->fetchAll(PDO::FETCH_ASSOC);
    }
 }
 class CircuitsDB{

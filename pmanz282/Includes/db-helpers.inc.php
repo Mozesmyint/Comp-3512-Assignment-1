@@ -41,6 +41,30 @@ function displayAllRaceResults($results){
         echo "</tbody>";
     echo "</table>";
 }
+function displayConstructorAllRaceResults($results){
+    echo "<table>";
+    echo "<thead>";
+        echo "<tr>";
+            echo "<th>Rnd</th>";
+            echo "<th>Circuit</th>";
+            echo "<th>Driver</th>";
+            echo "<th>Position</th>";
+            echo "<th>Points</th>";
+        echo "</tr>";
+    echo "</thead>";
+    echo "<tbody>";
+    foreach($results as $r){
+            echo "<tr>";
+                echo "<td>".$r['round']."</td>";
+                echo "<td>".$r['name']."</td>";
+                echo "<td>".$r['forename']." ".$r['surname']."</td>";
+                echo "<td>".$r['pos']."</td>";
+                echo "<td>".$r['MAX_POINTS']."</td>";  //look at db-classes.inc.php L69 for debugging, name = nickname
+            echo "</tr>";
+    }
+        echo "</tbody>";
+    echo "</table>";
+}
 function displayDriverConstructor($d){
     echo "<p> Name: ".$d['forename']." ".$d['surname']."</p>";
     echo "<p> Nationality: ".$d['nationality']."</p>";
