@@ -185,7 +185,7 @@ public function getAll() {
 }
 class ResultsDB{
 private static $baseSQL = 
-"SELECT races.name AS raceName, results.*, drivers.forename, drivers.surname, drivers.driverId, constructors.name AS constructorName, qualifying.q1, qualifying.q2, qualifying.q3 
+"SELECT races.name AS raceName, results.*, drivers.forename, drivers.surname, drivers.driverRef, constructors.name AS constructorName, qualifying.q1, qualifying.q2, qualifying.q3 
 FROM results
 INNER JOIN races ON Results.raceId = Races.raceId
 INNER JOIN drivers ON Results.driverId = Drivers.driverId

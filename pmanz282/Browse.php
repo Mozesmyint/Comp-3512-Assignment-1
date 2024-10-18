@@ -81,7 +81,7 @@ $raceGateway = new RacesDB($conn);
                             <?php foreach ($results as $r) { ?>
                                 <tr>
                                     <td><?= $r['positionOrder']; ?></td>
-                                    <td><a href="DriverPage.php?driverRef=<?= $r['driverId']; ?>"><?= $r['forename'] . ' ' . $r['surname']; ?></a></td>
+                                    <td><a href="DriverPage.php?driverRef=<?= $r['driverRef']; ?>"><?= $r['forename'] . ' ' . $r['surname']; ?></a></td>
                                     <td><a href="ConstructorPage.php?constructorId=<?= $r['constructorId']; ?>"><?= $r['constructorName']; ?></a></td>
                                     <td><?= $r['q1']; ?></td>
                                     <td><?= $r['q2']; ?></td>
@@ -121,7 +121,7 @@ $raceGateway = new RacesDB($conn);
                             <?php foreach ($results as $result) { ?>
                                 <tr>
                                     <td><?= $result['positionOrder']; ?></td>
-                                    <td><a href="driver.php?driverRef=<?= $result['driverId']; ?>"><?= $result['forename'] . ' ' . $result['surname']; ?></a></td>
+                                    <td><a href="DriverPage.php?driverRef=<?= $result['driverRef']; ?>"><?= $result['forename'] . ' ' . $result['surname']; ?></a></td>
                                     <td><a href="constructor.php?constructorId=<?= $result['constructorId']; ?>"><?= $result['constructorName']; ?></a></td>
                                     <td><?= $result['laps']; ?></td>
                                     <td><?= $result['points']; ?></td>
