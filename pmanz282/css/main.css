@@ -1,0 +1,90 @@
+:root{
+    /* Got colors by using https://www.formula1.com/ website and using a color extractor
+    https://www.colorcombos.com/combotester.html?rnd=0&color0=d31411&color1=ffffff&color2=ff8000&color3=3671c6&color4=e80020&color5=27f4d2&color6=814264&color7=229971&color8=6692ff&color9=b6babd&color10=64c4ff&color11=52e252&color12=0093cc&color13=604800&color14=aaaaac&color15=142756&color16=221977 */
+    --f1Red: #d31411;
+    --f1Black:#142756;
+    
+}
+*{
+    font-family:'Courier New', Courier, monospace;
+}
+header {
+    justify-content: space-between;
+    display: inline-flex;
+    width: 100%;
+    padding: auto;
+    box-shadow: #ccc;
+    border: 1px solid #ccc;
+    border-color: var(--f1Black);
+    background-color: var(--f1Red);
+    color: white;
+    font-family:'Courier New', Courier, monospace;
+}
+
+h2 {
+    margin: auto; 
+}
+
+a {
+    text-decoration: none;
+    background-color: rgba(44, 36, 36, 0.055);
+    padding: 10px 20px;
+    display: inline-flex;
+    margin: 10px;
+    border: 1px solid #ccc;
+    border-color: black;
+    border-radius: 4px;
+}
+nav a{
+    color: white;
+}
+
+a:hover {
+    background-color: #ccc;
+}
+
+body {
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+
+.leftcolumn {
+    flex: 1;
+    padding: 20px;
+    border: 1px solid black;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 100%;
+    margin: 20px;
+    gap: 20px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+a:hover{
+    background-color: var(--f1Black);
+}
+
+.logo{
+    background-color: var(--f1Red);
+    width:150px;
+    height: 35px;
+    justify-self: flex-start;
+    align-self: center;
+    padding-left: 10px;
+}
+
+img[src='./Includes/images/testimg.png']{
+    height: 350px;
+    width: auto;
+  }

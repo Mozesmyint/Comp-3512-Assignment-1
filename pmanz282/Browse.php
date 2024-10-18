@@ -17,12 +17,13 @@ $raceGateway = new RacesDB($conn);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/index-page.css">
+    <link rel="stylesheet" href="css/main.css">
     <title>Browse Races</title>
 </head>
 
 <body>
     <header>
+        <img class="logo" src="./Includes/images/f1_logo.png" alt="logo">
         <h2>F1 Dashboard Project</h2>
         <nav>
             <!-- Home button -->
@@ -82,7 +83,7 @@ $raceGateway = new RacesDB($conn);
                                 <tr>
                                     <td><?= $r['positionOrder']; ?></td>
                                     <td><a href="DriverPage.php?driverRef=<?= $r['driverRef']; ?>"><?= $r['forename'] . ' ' . $r['surname']; ?></a></td>
-                                    <td><a href="ConstructorPage.php?constructorId=<?= $r['constructorId']; ?>"><?= $r['constructorName']; ?></a></td>
+                                    <td><a href="ConstructorPage.php?constructorRef=<?= $r['constructorRef']; ?>"><?= $r['constructorName']; ?></a></td>
                                     <td><?= $r['q1']; ?></td>
                                     <td><?= $r['q2']; ?></td>
                                     <td><?= $r['q3']; ?></td>

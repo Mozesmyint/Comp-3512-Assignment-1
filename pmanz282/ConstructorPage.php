@@ -9,8 +9,29 @@ require_once './Includes/db-helpers.inc.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/Constructor.css">
     <title>COMP3512-f1DashboardProject</title>
 </head>
+<header>
+    <img class="logo" src="./Includes/images/f1_logo.png" alt="logo">
+    <h1>F1 Dashboard Project</h1>
+    <nav>
+            <!-- Home button -->
+            <a href="index.php">
+                Home
+            </a>
+            <!-- Browse button -->
+            <a href="Browse.php">
+                Browse
+            </a>
+            <!-- APIs button -->
+            <a href="APIsPage.php">
+                APIs
+            </a>
+            
+        </nav>
+</header>
 <body>
 <?php
         try{
@@ -29,12 +50,10 @@ require_once './Includes/db-helpers.inc.php';
             die($e->getMessage());
         }
     ?>
-
-    <h1>F1 Dashboard Project</h1>
+    
     <div class="container">
-        <div class="section">
+        <fieldset class="section">
             <h2>Constructor Details</h2>
-            <p>
                 <?php
                     if(isset($_GET['constructorRef'])){
                         if(count($construct) > 0){
@@ -46,9 +65,8 @@ require_once './Includes/db-helpers.inc.php';
                         echo "Enter a search term and press Filter";
                       }
                 ?>
-            </p>
-        </div>
-        <div class="section">
+        </fieldset>
+        <fieldset class="section">
             <h2>Race Results</h2>
                 <?php
                     if(isset($_GET['constructorRef'])){
@@ -56,10 +74,10 @@ require_once './Includes/db-helpers.inc.php';
                             displayALLRaceResultsConstructor($constructRaceDetails);
                         }
                       }else{
-                        echo "error";
+                        echo "No value in constructorRef";
                       }
                 ?>
-        </div>
+        </fieldset>
     </div>
 </body>
 </html>

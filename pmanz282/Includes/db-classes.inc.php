@@ -69,7 +69,7 @@ public function getOneForDriverRef($identifier){
 public function getAllForRace($identifier){
    //Inspiration to use Distinct: https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_distinct
    $sql = 
-   "SELECT DISTINCT Races.round, Circuits.name, Qualifying.position, MAX(ConstructorResults.points) AS MAX_POINTS
+   "SELECT DISTINCT Races.round, Circuits.name, Qualifying.position, SUM(ConstructorResults.points) AS SUM_POINTS
    FROM Drivers
          INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
          INNER JOIN Races ON Qualifying.raceId = Races.raceId
@@ -111,14 +111,13 @@ public function getALLRaceResultsConstructor($constructorRef){
    //Round Circuit Driver Position Points
    $sql = 
    "SELECT DISTINCT Constructors.constructorRef, Races.round, Circuits.name, Drivers.forename, Drivers.surname,
-         ConstructorResults.points, ConstructorStandings.position 
+      Results.points AS points, Results.position AS position
    FROM Constructors
       INNER JOIN Qualifying ON Constructors.constructorId = Qualifying.constructorId
       INNER JOIN Drivers ON Drivers.driverId = Qualifying.driverId
       INNER JOIN Races ON Races.raceId = Qualifying.raceId
-      INNER JOIN ConstructorResults ON ConstructorResults.constructorId = Qualifying.constructorId
       INNER JOIN Circuits ON Circuits.circuitId = Races.circuitId
-      INNER JOIN ConstructorStandings ON ConstructorStandings.constructorId = Qualifying.constructorId
+      INNER JOIN Results ON Results.constructorId = Qualifying.constructorId
    WHERE 
       Races.year = 2023 AND Constructors.constructorRef = ?
    GROUP BY 
@@ -200,7 +199,8 @@ public function getAll() {
 }
 class ResultsDB{
 private static $baseSQL = 
-"SELECT races.name AS raceName, results.*, drivers.forename, drivers.surname, drivers.driverRef, constructors.name AS constructorName, qualifying.q1, qualifying.q2, qualifying.q3 
+"SELECT races.name AS raceName, results.*, drivers.forename, drivers.surname, drivers.driverRef, constructors.name AS constructorName, 
+qualifying.q1, qualifying.q2, qualifying.q3, constructors.constructorRef
 FROM results
 INNER JOIN races ON Results.raceId = Races.raceId
 INNER JOIN drivers ON Results.driverId = Drivers.driverId

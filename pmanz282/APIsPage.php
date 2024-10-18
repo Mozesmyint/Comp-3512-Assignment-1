@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/index-page.css">
+    <link rel="stylesheet" href="css/main.css">
     <title>APIs Tester Page</title>
 </head>
 <header>
+    <img class="logo" src="./Includes/images/f1_logo.png" alt="logo">
     <h2>F1 Dashboard Project</h2>
     <nav>
         <!-- Home button -->

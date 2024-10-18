@@ -10,7 +10,7 @@ function displayDriver($d){
         echo "<p> Nationality: ".$d['nationality']."</p>";
         echo '<p> Url: <a href="'.$d['dURL'].'">' . $d['dURL'] .'</a></p>';
 }
-function calcAge($dob){ //not finished, implement age in displayDriver
+function calcAge($dob){
     //Inspiration from: https://stackoverflow.com/questions/64003/how-do-i-use-php-to-get-the-current-year
     //$currDate = date("Y");
     //Inspiration from: https://sentry.io/answers/convert-a-date-format-in-php/#:~:text=The%20Solution,in%20Unix%20time%20as%20parameters.
@@ -25,7 +25,13 @@ function calcAge($dob){ //not finished, implement age in displayDriver
     return $now->diff($dob)->y;
 
 }
-function displayAllRaceResults($results){
+function displayRaceResults($list){
+    foreach($list as $l){
+        echo "<p>".$l['name']."</p>";
+    }
+
+}
+function displayAllRaceResultsDriver($results){
     echo "<table>";
     echo "<thead>";
         echo "<tr>";
@@ -41,7 +47,7 @@ function displayAllRaceResults($results){
                 echo "<td>".$r['round']."</td>";
                 echo "<td>".$r['name']."</td>";
                 echo "<td>".$r['position']."</td>";
-                echo "<td>".$r['MAX_POINTS']."</td>";  //look at db-classes.inc.php L69 for debugging, name = nickname
+                echo "<td>".$r['SUM_POINTS']."</td>";  //look at db-classes.inc.php L69 for debugging, name = nickname
             echo "</tr>";
     }
         echo "</tbody>";
