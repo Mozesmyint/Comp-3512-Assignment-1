@@ -18,6 +18,7 @@ function calcAge($dob){ //not finished, implement age in displayDriver
     //$DoBDate = date("Y", ((int)$dob));
     //return ($currDate - $DoBDate);
 
+    //inspiration from https://www.w3resource.com/php-exercises/php-date-exercise-18.php
     $dob = new DateTime($dob);
     $now = new DateTime();
 

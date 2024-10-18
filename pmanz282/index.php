@@ -1,32 +1,3 @@
-<!-- <?php
-        require_once './Includes/Config.inc.php';
-        require_once './Includes/db-classes.inc.php';
-
-        try {
-            $pdo = new PDO(DBCONNSTRING, DBUSER, DBPASS);
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            $driver = new DriversDB($pdo);
-            $con = new ConstructorsDB($pdo);
-            $cir = new CircuitsDB($pdo);
-            $race = new RacesDB($pdo); //ambiguous 
-            $qual = new QualifyingDB($pdo);
-            $res = new ResultsDB($pdo);
-
-            $values = $res->getAll();
-
-            echo count($values);
-            foreach ($values as $v) {
-                echo $v[0];
-            }
-            $pdo = null;
-        } catch (Exception $e) {
-            echo $e;
-        }
-        ?> -->
-
-<!-- not sure if we need try catch in index page? -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,11 +16,11 @@
                 Home
             </a>
             <!-- Browse button -->
-            <a href="Browse.php">
+            <a href="browse.php">
                 Browse
             </a>
             <!-- APIs button -->
-            <a href="DriverPage.php"> <!--To be changed when page is made-->
+            <a href="driverPage.php"> <!--To be changed when page is made-->
                 APIs
             </a>
         </nav>
@@ -60,7 +31,7 @@
             <div class="desc">
                 <p>Testing</p>
             </div>
-            <a href="Browse.php"> <!--To be changed when page is made-->
+            <a href="browse.php"> <!--To be changed when page is made-->
                 Browse 2022 Season
             </a>
         </div>

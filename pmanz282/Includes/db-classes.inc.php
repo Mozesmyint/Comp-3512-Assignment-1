@@ -185,23 +185,22 @@ public function getAll() {
 }
 class ResultsDB{
 private static $baseSQL = 
-"
-SELECT * FROM Results
-INNER JOIN Races ON Results.raceId = Races.raceId
-INNER JOIN Drivers ON Results.driverId = Drivers.driverId
-INNER JOIN Constructors ON Results.constructorId = 
-Constructors.constructorId
-";
+"SELECT races.name AS raceName, results.*, drivers.forename, drivers.surname, drivers.driverId, constructors.name AS constructorName, qualifying.q1, qualifying.q2, qualifying.q3 
+FROM results
+INNER JOIN races ON Results.raceId = Races.raceId
+INNER JOIN drivers ON Results.driverId = Drivers.driverId
+INNER JOIN constructors ON Results.constructorId = Constructors.constructorId
+LEFT JOIN qualifying ON results.raceId = qualifying.raceId AND results.driverId = qualifying.driverId
+WHERE results.raceId = :raceId";
 
 private $pdo;
 public function __construct($connection){
    $this->pdo = $connection;
 }
-public function getAll() { 
+public function getAll($raceId) { 
    $sql = self::$baseSQL; 
-   $statement = 
-      DatabaseHelper::runQuery($this->pdo, $sql, null); 
-   return $statement->fetchAll(); 
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($raceId)); 
+   return $statement->fetchAll(PDO::FETCH_ASSOC); 
    } 
 }
 ?>
