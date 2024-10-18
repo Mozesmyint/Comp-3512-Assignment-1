@@ -20,15 +20,11 @@ require_once './Includes/db-helpers.inc.php';
             //returns drivers for a season
             $driverGateway = new DriversDB($conn);
             $constructorGateway = new ConstructorsDB($conn);
-
             if(isset($_GET['constructorRef'])){
                 $construct = $constructorGateway->getALLConstructorDetails($_GET['constructorRef']);
-            }
-            if(isset($_GET['constructorRef']) && isset($_GET['driverRef'])){
                 $constructRaceDetails = $constructorGateway
-                ->getALLRaceResultsForConstructor($_GET['driverRef'],$_GET['constructorRef'] );
+                ->getALLRaceResultsConstructor($_GET['constructorRef'] );
             }
-        
         } catch (PDOException $e){
             die($e->getMessage());
         }
@@ -55,7 +51,7 @@ require_once './Includes/db-helpers.inc.php';
         <div class="section">
             <h2>Race Results</h2>
                 <?php
-                    if(isset($_GET['constructorId']) && isset($_GET['driverRef'])){
+                    if(isset($_GET['constructorRef'])){
                         if(count($constructRaceDetails) > 0){
                             displayALLRaceResultsConstructor($constructRaceDetails);
                         }

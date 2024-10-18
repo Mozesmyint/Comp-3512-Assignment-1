@@ -107,12 +107,27 @@ public function getALLConstructorDetails($constructorRef){
    $statement = DatabaseHelper::runQuery($this->pdo, $sql, $constructorRef);
    return $statement->fetch(PDO::FETCH_ASSOC);
 }
-public function getALLRaceResultsForConstructor($driverRef ,$constructorRef){
+public function getALLRaceResultsConstructor($constructorRef){
+   //Round Circuit Driver Position Points
    $sql = 
-   "
-   
+   "SELECT DISTINCT Constructors.constructorRef, Races.round, Circuits.name, Drivers.forename, Drivers.surname,
+         ConstructorResults.points, ConstructorStandings.position 
+   FROM Constructors
+      INNER JOIN Qualifying ON Constructors.constructorId = Qualifying.constructorId
+      INNER JOIN Drivers ON Drivers.driverId = Qualifying.driverId
+      INNER JOIN Races ON Races.raceId = Qualifying.raceId
+      INNER JOIN ConstructorResults ON ConstructorResults.constructorId = Qualifying.constructorId
+      INNER JOIN Circuits ON Circuits.circuitId = Races.circuitId
+      INNER JOIN ConstructorStandings ON ConstructorStandings.constructorId = Qualifying.constructorId
+   WHERE 
+      Races.year = 2023 AND Constructors.constructorRef = ?
+   GROUP BY 
+      Constructors.constructorRef, Races.round, Circuits.name, Drivers.forename, Drivers.surname
+   ORDER BY 
+      Races.round
    ";
-   $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($driverRef, $constructorRef));
+   // name, constructorRef, nationality
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, $constructorRef);
    return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 }
