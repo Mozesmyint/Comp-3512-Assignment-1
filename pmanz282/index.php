@@ -20,7 +20,7 @@
                 Browse
             </a>
             <!-- APIs button -->
-            <a href="driverPage.php"> <!--To be changed when page is made-->
+            <a href="APIsPage.php"> <!--To be changed when page is made-->
                 APIs
             </a>
         </nav>

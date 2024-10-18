@@ -24,7 +24,7 @@ require_once './Includes/db-helpers.inc.php';
                 Browse
             </a>
             <!-- APIs button -->
-            <a href="DriverPage.php"> <!--To be changed when page is made-->
+            <a href="APIsPage.php">
                 APIs
             </a>
         </nav>

@@ -34,7 +34,7 @@ $raceGateway = new RacesDB($conn);
                 Browse
             </a>
             <!-- APIs button -->
-            <a href="DriverPage.php"> <!--To be changed when page is made-->
+            <a href="APIsPage.php"> <!--To be changed when page is made-->
                 APIs
             </a>
         </nav>
