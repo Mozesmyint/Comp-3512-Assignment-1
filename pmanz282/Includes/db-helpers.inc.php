@@ -8,7 +8,7 @@ function displayDriver($d){
         echo "<p> Date of Birth: ".$d['dob']."</p>";
         echo "<p> Age: ".calcAge($d['dob'])."</p>";
         echo "<p> Nationality: ".$d['nationality']."</p>";
-        echo '<p> Url: <a href="'.$d['url'].'">' . $d['url'] .'</a></p>';
+        echo '<p> Url: <a href="'.$d['dURL'].'">' . $d['dURL'] .'</a></p>';
 }
 function calcAge($dob){ //not finished, implement age in displayDriver
     //Inspiration from: https://stackoverflow.com/questions/64003/how-do-i-use-php-to-get-the-current-year

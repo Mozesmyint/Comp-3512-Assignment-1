@@ -46,7 +46,7 @@ class DatabaseHelper {
 } 
 class DriversDB{
 private static $baseSQL = 
-"SELECT * FROM Drivers 
+"SELECT Drivers.url AS dURL, * FROM Drivers 
    INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
    INNER JOIN Races ON Qualifying.raceId = Races.raceId
    INNER JOIN ConstructorResults ON ConstructorResults.constructorId =  Qualifying.constructorId
@@ -62,7 +62,7 @@ public function getAll() {
    return $statement->fetchAll(); 
 } 
 public function getOneForDriverRef($identifier){
-   $sql = self::$baseSQL . " WHERE Drivers.driverRef LIKE ? AND Races.year = 2023"; 
+   $sql = self::$baseSQL . " WHERE Drivers.driverRef LIKE ? AND Races.year = 2022"; 
    $statement = DatabaseHelper::runQuery($this->pdo, $sql, $identifier);
    return $statement->fetch(PDO::FETCH_ASSOC); 
 }
@@ -77,7 +77,7 @@ public function getAllForRace($identifier){
          INNER JOIN ConstructorResults ON Races.raceId = ConstructorResults.raceId
          INNER JOIN Seasons ON Races.year = Seasons.year
    WHERE 
-      Races.year = 2023 AND Drivers.driverRef = ?
+      Races.year = 2022 AND Drivers.driverRef = ?
    GROUP BY Races.round, Circuits.name, Qualifying.position 
    ORDER BY Races.round";
    //If using DISTINCT, values in select must be repeated in group by or aggregated
@@ -156,7 +156,7 @@ public function getAllUniqRaces(){
    INNER JOIN Races ON Qualifying.raceId = Races.raceId
    INNER JOIN ConstructorResults ON ConstructorResults.constructorId =  Qualifying.constructorId
    INNER JOIN Seasons ON Races.year = Seasons.year
-   WHERE Seasons.year = 2023 ORDER BY Races.round";
+   WHERE Seasons.year = 2022 ORDER BY Races.round";
    $statement = DatabaseHelper::runQuery($this->pdo,$sql,null);
    return $statement->fetchAll(PDO::FETCH_ASSOC);
 }

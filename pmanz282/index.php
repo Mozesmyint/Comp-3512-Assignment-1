@@ -60,7 +60,7 @@
             <div class="desc">
                 <p>Testing</p>
             </div>
-            <a href="DriverPage.php"> <!--To be changed when page is made-->
+            <a href="Browse.php"> <!--To be changed when page is made-->
                 Browse 2022 Season
             </a>
         </div>
