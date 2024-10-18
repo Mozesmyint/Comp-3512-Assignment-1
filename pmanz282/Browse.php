@@ -123,7 +123,8 @@ $raceGateway = new RacesDB($conn);
                                 <tr>
                                     <td><?= $result['positionOrder']; ?></td>
                                     <td><a href="DriverPage.php?driverRef=<?= $result['driverRef']; ?>"><?= $result['forename'] . ' ' . $result['surname']; ?></a></td>
-                                    <td><a href="constructor.php?constructorId=<?= $result['constructorId']; ?>"><?= $result['constructorName']; ?></a></td>
+                                    <td><a href="ConstructorPage.php?constructorRef=<?= $result['constructorRef']; ?>"><?= $result['constructorName']; ?></a></td>
+
                                     <td><?= $result['laps']; ?></td>
                                     <td><?= $result['points']; ?></td>
                                 </tr>
