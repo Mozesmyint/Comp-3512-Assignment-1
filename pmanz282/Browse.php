@@ -73,7 +73,7 @@ $raceGateway = new RacesDB($conn);
                     foreach ($results as $r){
                         echo '<tr>';
                         echo '<td>' . $r['positionOrder'] . '</td>';
-                        echo '<td><a href="driverPage.php?driverRef=' . $r['surname'] . '">'. $r['forename'] . " " . $r['surname'] . '</a></td>';
+                        echo '<td><a href="DriverPage.php?driverRef=' . $r['driverRef'] . '">'. $r['forename'] . " " . $r['surname'] . '</a></td>';
                     }
                 }
             }

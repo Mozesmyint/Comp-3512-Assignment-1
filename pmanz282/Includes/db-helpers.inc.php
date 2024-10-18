@@ -12,11 +12,16 @@ function displayDriver($d){
 }
 function calcAge($dob){ //not finished, implement age in displayDriver
     //Inspiration from: https://stackoverflow.com/questions/64003/how-do-i-use-php-to-get-the-current-year
-    $currDate = date("Y");
+    //$currDate = date("Y");
     //Inspiration from: https://sentry.io/answers/convert-a-date-format-in-php/#:~:text=The%20Solution,in%20Unix%20time%20as%20parameters.
     //https://stackoverflow.com/questions/8529656/how-do-i-convert-a-string-to-a-number-in-php
-    $DoBDate = date("Y", ((int)$dob));
-    return ($currDate - $DoBDate);
+    //$DoBDate = date("Y", ((int)$dob));
+    //return ($currDate - $DoBDate);
+
+    $dob = new DateTime($dob);
+    $now = new DateTime();
+
+    return $now->diff($dob)->y;
 
 }
 function displayAllRaceResults($results){

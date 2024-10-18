@@ -56,14 +56,15 @@ require_once './Includes/db-helpers.inc.php';
             <p>
                 <?php
                     if(isset($_GET['driverRef'])){
-                        if(count($driver) > 0){
+                        displayDriver($driver);
+                    //     if(count($driver) > 0){
                             
-                            displayDriver($driver);
-                        }else{
-                          echo "no driver found with search term = " . $_GET['driverRef'];
-                        }
-                      }else{
-                        echo "Enter a search term and press Filter";
+                    //         displayDriver($driver);
+                    //     }else{
+                    //       echo "no driver found with search term = " . $_GET['driverRef'];
+                    //     }
+                    //   }else{
+                    //     echo "Enter a search term and press Filter";
                       }
                 ?>
             </p>
