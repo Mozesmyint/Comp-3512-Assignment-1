@@ -69,16 +69,17 @@ public function getOneForDriverRef($identifier){
 public function getAllForRace($identifier){
    //Inspiration to use Distinct: https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_distinct
    $sql = 
-   "SELECT DISTINCT Races.round, Circuits.name, Qualifying.position, SUM(ConstructorResults.points) AS SUM_POINTS
+   "SELECT DISTINCT Races.round, Circuits.name, results.position, results.points
    FROM Drivers
-         INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
-         INNER JOIN Races ON Qualifying.raceId = Races.raceId
+         INNER JOIN results on Drivers.driverId = results.driverId
+         -- INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
+         INNER JOIN Races ON results.raceId = Races.raceId
          INNER JOIN Circuits ON Circuits.circuitId = Races.circuitId
          INNER JOIN ConstructorResults ON Races.raceId = ConstructorResults.raceId
          INNER JOIN Seasons ON Races.year = Seasons.year
    WHERE 
       Races.year = 2022 AND Drivers.driverRef = ?
-   GROUP BY Races.round, Circuits.name, Qualifying.position 
+   GROUP BY Races.round, Circuits.name, results.position 
    ORDER BY Races.round";
    //If using DISTINCT, values in select must be repeated in group by or aggregated
 
@@ -119,7 +120,7 @@ public function getALLRaceResultsConstructor($constructorRef){
       INNER JOIN Circuits ON Circuits.circuitId = Races.circuitId
       INNER JOIN Results ON Results.constructorId = Qualifying.constructorId
    WHERE 
-      Races.year = 2023 AND Constructors.constructorRef = ?
+      Races.year = 2022 AND Constructors.constructorRef = ?
    GROUP BY 
       Constructors.constructorRef, Races.round, Circuits.name, Drivers.forename, Drivers.surname
    ORDER BY 

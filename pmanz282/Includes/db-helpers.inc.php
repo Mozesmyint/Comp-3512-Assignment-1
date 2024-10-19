@@ -47,7 +47,7 @@ function displayAllRaceResultsDriver($results){
                 echo "<td>".$r['round']."</td>";
                 echo "<td>".$r['name']."</td>";
                 echo "<td>".$r['position']."</td>";
-                echo "<td>".$r['SUM_POINTS']."</td>";  //look at db-classes.inc.php L69 for debugging, name = nickname
+                echo "<td>".$r['points']."</td>";  //look at db-classes.inc.php L69 for debugging, name = nickname
             echo "</tr>";
     }
         echo "</tbody>";
