@@ -9,23 +9,18 @@ header('Content-type: application/json');
 header("Access-Control-Allow-Origin: *"); 
 
 try{
-    $conn = DatabaseHelper::createConnection(array(DBCONNSTRING, 
-    DBUSER, DBPASS));
-
+    $conn = DatabaseHelper::createConnection(array(DBCONNSTRING, DBUSER, DBPASS));
     $driverGateway = new DriversDB($conn);
-    
-
     //returns driver specified 
-    if ( isCorrectQueryStringInfo('driverRef') ) {
-        $result = $driverGateway->getOneForDriverRef($_GET['driverRef']); 
-
+    if ( isCorrectQueryStringInfo('ref') ) {
+        $result = $driverGateway->getOneForDriverRef($_GET['ref']); 
     //returns drivers within a given race
-    }else if ( isCorrectQueryStringInfo('race') ) {
-        $result = $driverGateway->getAllForRace($_GET['race']);
+    }else if ( isCorrectQueryStringInfo('raceId') ) {
+        $result = $driverGateway->getAllForRace($_GET['raceId']);
 
     //returns drivers for the season (2022)
     }else{
-        // $result = $driverGateway->getAllDriverForSeason();
+        $result = $driverGateway->getAll();
     } 
     
     echo json_encode( $result, JSON_NUMERIC_CHECK );

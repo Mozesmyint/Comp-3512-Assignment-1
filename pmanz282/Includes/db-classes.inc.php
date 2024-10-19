@@ -69,7 +69,7 @@ public function getOneForDriverRef($identifier){
 public function getAllForRace($identifier){
    //Inspiration to use Distinct: https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_distinct
    $sql = 
-   "SELECT DISTINCT Races.round, Circuits.name, results.position, results.points
+   "SELECT DISTINCT Races.round, races.name, results.position, results.points
    FROM Drivers
          INNER JOIN results on Drivers.driverId = results.driverId
          -- INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
@@ -100,6 +100,11 @@ public function getAll() {
       DatabaseHelper::runQuery($this->pdo, $sql, null ); 
    return $statement->fetchAll(PDO::FETCH_ASSOC); 
    }
+public function getConstructorRef($constructorRef) {
+   $sql = self::$baseSQL . " WHERE constructorRef = ?";
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($constructorRef));
+   return $statement->fetchAll();
+}
 public function getALLConstructorDetails($constructorRef){
    $sql = 
    "SELECT Constructors.constructorRef, Constructors.name, Constructors.nationality, Constructors.url FROM Constructors
@@ -142,6 +147,11 @@ public function getAll() {
       DatabaseHelper::runQuery($this->pdo, $sql, null); 
    return $statement->fetchAll(); 
    } 
+public function getCircuitRef($circuitRef) {
+   $sql = self::$baseSQL . " WHERE circuitRef = ?";
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($circuitRef));
+   return $statement->fetchAll();
+}
 }
 class RacesDB{
 private static $baseSQL = 
@@ -189,6 +199,11 @@ Qualifying.constructorId;
 private $pdo;
 public function __construct($connection){
    $this->pdo = $connection;
+}
+public function getQualifyingRef($qualifyingRef) {
+   $sql = self::$baseSQL . " WHERE qualifyingId = ?";
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($qualifyingRef));
+   return $statement->fetchAll();
 }
 public function getAll() { 
    $sql = self::$baseSQL; 
