@@ -12,9 +12,9 @@ try {
     $conn = DatabaseHelper::createConnection(array(DBCONNSTRING, DBUSER, DBPASS));
     $circuitsGateway = new CircuitsDB($conn);
     if (isCorrectQueryStringInfo("ref")) {
-        $circuits = $circuitsGateway->getCircuitRef($_GET["ref"]);
+        $circuits = $circuitsGateway->getCircuitRefAPI($_GET["ref"]);
     } else {
-        $circuits = $circuitsGateway->getAll();
+        $circuits = $circuitsGateway->getAllCircuitsAPI();
     }
     echo json_encode($circuits, JSON_NUMERIC_CHECK);
 } catch (Exception $e) {

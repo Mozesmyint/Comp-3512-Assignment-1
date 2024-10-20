@@ -46,29 +46,43 @@ class DatabaseHelper {
 } 
 class DriversDB{
 private static $baseSQL = 
-"SELECT Drivers.forename, Drivers.surname, Drivers.dob, Drivers.nationality, Drivers.url AS dURL FROM Drivers 
-   INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
-   INNER JOIN Races ON Qualifying.raceId = Races.raceId
+"SELECT %s --Select
+FROM Drivers 
+   %s --Inner
+   %s --Where
+   %s --Group
+   %s --Order
    ";
 private $pdo;
 public function __construct($connection){
    $this->pdo = $connection;
 }
 public function getAllAPI() { 
-   $sql = self::$baseSQL. " WHERE Races.year = 2022 "; 
-   $statement = 
-      DatabaseHelper::runQuery($this->pdo, $sql, null); 
+   $selectSQL = " Drivers.forename, Drivers.surname, Drivers.dob, Drivers.nationality, Drivers.url AS dURL ";
+   $innerjoinSQL =
+   " INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
+      INNER JOIN Races ON Qualifying.raceId = Races.raceId
+   ";
+   $whereSQL = " WHERE Races.year = 2022 ";
+   $sql =sprintf(self::$baseSQL, $selectSQL, $innerjoinSQL, $whereSQL, "", "");
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, null); 
    return $statement->fetchAll(); 
 } 
 public function getOneForDriverRef($identifier){
-   $sql = self::$baseSQL . " WHERE Drivers.driverRef LIKE ? AND Races.year = 2022"; 
+   $selectSQL = " Drivers.forename, Drivers.surname, Drivers.dob, Drivers.nationality, Drivers.url AS dURL ";
+   $innerjoinSQL =
+   " INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
+      INNER JOIN Races ON Qualifying.raceId = Races.raceId
+   ";
+   $whereSQL = " WHERE Drivers.driverRef LIKE ? AND Races.year = 2022 ";
+   $sql =sprintf(self::$baseSQL, $selectSQL, $innerjoinSQL, $whereSQL, "", "");
    $statement = DatabaseHelper::runQuery($this->pdo, $sql, $identifier);
    return $statement->fetch(PDO::FETCH_ASSOC); 
 }
-public function getAllForRace($identifier){
+public function getAllForRace($driverRef){
    //Inspiration to use Distinct: https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_distinct
    $sql = 
-   "SELECT DISTINCT Races.round, races.name, results.position, results.points
+   "SELECT DISTINCT Races.round, Circuits.name, results.position, results.points
    FROM Drivers
          INNER JOIN results on Drivers.driverId = results.driverId
          -- INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
@@ -77,77 +91,106 @@ public function getAllForRace($identifier){
          INNER JOIN ConstructorResults ON Races.raceId = ConstructorResults.raceId
          INNER JOIN Seasons ON Races.year = Seasons.year
    WHERE 
-      Races.raceId = ?
+      Drivers.driverRef = ? AND Races.year = 2022
    GROUP BY Races.round, Circuits.name, results.position 
-   ORDER BY Races.round";
+   ORDER BY Races.round ";
    //If using DISTINCT, values in select must be repeated in group by or aggregated
 
-   $statement = DatabaseHelper::runQuery($this->pdo, $sql, $identifier);
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, $driverRef);
+   return $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+public function getAllForDriverIdAPI($driverId){
+   //Inspiration to use Distinct: https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_distinct
+   $sql = 
+   "SELECT DISTINCT Drivers.driverRef, Drivers.forename, Drivers.surname, Drivers.dob, Drivers.nationality, Drivers.url
+   FROM Drivers
+         INNER JOIN results on Drivers.driverId = results.driverId
+         INNER JOIN Races ON results.raceId = Races.raceId
+         INNER JOIN Circuits ON Circuits.circuitId = Races.circuitId
+         INNER JOIN ConstructorResults ON Races.raceId = ConstructorResults.raceId
+         INNER JOIN Seasons ON Races.year = Seasons.year
+   WHERE 
+      Races.raceId = ?
+   GROUP BY Drivers.driverRef, Drivers.forename, Drivers.surname, Drivers.dob, Drivers.nationality, Drivers.url
+   ";
+   //If using DISTINCT, values in select must be repeated in group by or aggregated
+
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, $driverId);
    return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 }
 class ConstructorsDB{
 private static $baseSQL = 
-"SELECT * FROM Constructors ";
+"SELECT %s --Select
+FROM Constructors 
+%s --Inner
+%s --Where
+%s --Group
+%s --Order
+";
+
 private $pdo;
 public function __construct($connection){
    $this->pdo = $connection;
 }
-public function getAll() { 
-   $sql = self::$baseSQL; 
-   $statement = 
-      DatabaseHelper::runQuery($this->pdo, $sql, null ); 
+public function getAllConstructorsAPI() { 
+   $selectSQL = " Constructors.constructorRef, Constructors.name, Constructors.nationality, Constructors.url ";
+   $sql = sprintf(self::$baseSQL, $selectSQL, "", "", "", "");
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, null ); 
    return $statement->fetchAll(PDO::FETCH_ASSOC); 
    }
-public function getConstructorRef($constructorRef) {
-   $sql = self::$baseSQL . " WHERE constructorRef = ?";
+public function getConstructorRefAPI($constructorRef) {
+   $selectSQL = " Constructors.constructorRef, Constructors.name, Constructors.nationality, Constructors.url ";
+   $whereSQL =" WHERE constructorRef = ? ";
+   $sql = sprintf(self::$baseSQL, $selectSQL, "", $whereSQL, "", "");
    $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($constructorRef));
    return $statement->fetchAll();
 }
 public function getALLConstructorDetails($constructorRef){
-   $sql = 
-   "SELECT Constructors.constructorRef, Constructors.name, Constructors.nationality, Constructors.url FROM Constructors
-   WHERE Constructors.constructorRef = ?
-   ";
+   $selectSQL = " Constructors.constructorRef, Constructors.name, Constructors.nationality, Constructors.url ";
+   $whereSQL =" WHERE Constructors.constructorRef = ? ";
+   $sql = sprintf(self::$baseSQL, $selectSQL, "", $whereSQL, "", "");
    $statement = DatabaseHelper::runQuery($this->pdo, $sql, $constructorRef);
    return $statement->fetch(PDO::FETCH_ASSOC);
 }
 public function getALLRaceResultsConstructor($constructorRef){
    //Round Circuit Driver Position Points
-   $sql = 
-   "SELECT DISTINCT Races.round, races.name, Drivers.forename, Drivers.surname, Results.points, Results.position 
-   FROM Constructors
-      -- INNER JOIN Qualifying ON Constructors.constructorId = Qualifying.constructorId
-      INNER JOIN results ON Constructors.constructorId = Results.constructorId
+   $selectSQL = " DISTINCT Races.round, Races.name, Drivers.forename, Drivers.surname, Results.points, Results.position  ";
+   $innerjoinSQL = 
+   " INNER JOIN results ON Constructors.constructorId = Results.constructorId
       INNER JOIN Drivers ON Drivers.driverId = results.driverId
       INNER JOIN Races ON Races.raceId = results.raceId
       INNER JOIN Circuits ON Circuits.circuitId = Races.circuitId
-      -- INNER JOIN Results ON Results.constructorId = Qualifying.constructorId
-   WHERE 
-      Races.year = 2022 AND Constructors.constructorRef = ?
-   GROUP BY 
-      Constructors.constructorRef, Races.round, Circuits.name, Drivers.forename, Drivers.surname
-   ORDER BY 
-      Races.round, results.position";
+   ";
+   $whereSQL = " WHERE Races.year = 2022 AND Constructors.constructorRef = ? ";
+   $groupSQL = " GROUP BY Constructors.constructorRef, Races.round, Circuits.name, Drivers.forename, Drivers.surname ";
+   $orderSQL = " ORDER BY Races.round, results.position ";
+   $sql = sprintf(self::$baseSQL, $selectSQL, $innerjoinSQL,$whereSQL, $groupSQL, $orderSQL);
    // name, constructorRef, nationality
    $statement = DatabaseHelper::runQuery($this->pdo, $sql, $constructorRef);
    return $statement->fetchAll(PDO::FETCH_ASSOC);
 }
 }
 class CircuitsDB{
-private static $baseSQL = "SELECT * FROM circuits";
+private static $baseSQL = 
+"SELECT 
+   Circuits.circuitRef, Circuits.name, Circuits.location, Circuits.country,
+   Circuits.lat, Circuits.lng, Circuits.alt, Circuits.url
+FROM circuits
+%s --Where
+";
 private $pdo;
 public function __construct($connection){
    $this->pdo = $connection;
 }
-public function getAll() { 
-   $sql = self::$baseSQL; 
-   $statement = 
-      DatabaseHelper::runQuery($this->pdo, $sql, null); 
+public function getAllCircuitsAPI() { 
+   $sql = sprintf(self::$baseSQL, "");
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, null); 
    return $statement->fetchAll(); 
    } 
-public function getCircuitRef($circuitRef) {
-   $sql = self::$baseSQL . " WHERE circuitRef = ?";
+public function getCircuitRefAPI($circuitRef) {
+   $whereSQL = " WHERE circuitRef = ? ";
+   $sql = sprintf(self::$baseSQL, $whereSQL);
    $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($circuitRef));
    return $statement->fetchAll();
 }

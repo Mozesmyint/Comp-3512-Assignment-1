@@ -12,9 +12,9 @@ try {
     $conn = DatabaseHelper::createConnection(array(DBCONNSTRING, DBUSER, DBPASS));
     $constructorGateway = new ConstructorsDB($conn);
     if (isCorrectQueryStringInfo("ref")) {
-        $constructors = $constructorGateway->getConstructorRef($_GET["ref"]);
+        $constructors = $constructorGateway->getConstructorRefAPI($_GET["ref"]);
     } else {
-        $constructors = $constructorGateway->getAll();
+        $constructors = $constructorGateway->getAllConstructorsAPI();
     }
     echo json_encode($constructors, JSON_NUMERIC_CHECK);
 } catch (Exception $e) {

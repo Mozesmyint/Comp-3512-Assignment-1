@@ -16,7 +16,7 @@ try{
         $result = $driverGateway->getOneForDriverRef($_GET['ref']); 
     //returns drivers within a given race
     }else if ( isCorrectQueryStringInfo('raceId') ) {
-        $result = $driverGateway->getAllForRace($_GET['raceId']);
+        $result = $driverGateway->getAllForDriverIdAPI($_GET['raceId']);
 
     //returns drivers for the season (2022)
     }else{
