@@ -52,6 +52,7 @@
         </div>
 
         <div class="rightcolumn">
+            <!-- Image taken from: https://www.forbes.com/sites/bernardmarr/2023/07/10/how-artificial-intelligence-data-and-analytics-are-transforming-formula-one-in-2023/ -->
             <img src="./Includes/images/testimg.png" alt="car picture">
         </div>
     </div>

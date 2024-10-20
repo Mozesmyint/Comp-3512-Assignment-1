@@ -82,7 +82,7 @@ public function getOneForDriverRef($identifier){
 public function getAllForRace($driverRef){
    //Inspiration to use Distinct: https://www.w3schools.com/sql/trysql.asp?filename=trysql_select_distinct
    $sql = 
-   "SELECT DISTINCT Races.round, Circuits.name, results.position, results.points
+   "SELECT DISTINCT Races.round, Races.name, results.position, results.points
    FROM Drivers
          INNER JOIN results on Drivers.driverId = results.driverId
          -- INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
@@ -92,7 +92,7 @@ public function getAllForRace($driverRef){
          INNER JOIN Seasons ON Races.year = Seasons.year
    WHERE 
       Drivers.driverRef = ? AND Races.year = 2022
-   GROUP BY Races.round, Circuits.name, results.position 
+   GROUP BY Races.round, Races.name, results.position 
    ORDER BY Races.round ";
    //If using DISTINCT, values in select must be repeated in group by or aggregated
 
