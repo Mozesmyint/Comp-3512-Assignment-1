@@ -77,7 +77,7 @@ public function getAllForRace($identifier){
          INNER JOIN ConstructorResults ON Races.raceId = ConstructorResults.raceId
          INNER JOIN Seasons ON Races.year = Seasons.year
    WHERE 
-      Races.year = 2022 AND Drivers.driverRef = ?
+      Races.raceId = ?
    GROUP BY Races.round, Circuits.name, results.position 
    ORDER BY Races.round";
    //If using DISTINCT, values in select must be repeated in group by or aggregated
@@ -184,7 +184,7 @@ public function getRacesRef($raceId){
 }
 class QualifyingDB{
 private static $baseSQL = 
-"SELECT Qualifying.q1, Qualifying.q2,Qualifying.q3 
+"SELECT Qualifying.position, Qualifying.q1, Qualifying.q2,Qualifying.q3 
    FROM Qualifying
    INNER JOIN Races ON Races.raceId = Qualifying.raceId
    INNER JOIN Results ON Races.raceId = Results.raceId
@@ -231,7 +231,7 @@ public function getRaceIdAPI($raceId){
    */
    $sql =
    "SELECT 
-    Races.raceId, Drivers.driverRef, Drivers.code, Drivers.forename, Drivers.surname,
+    Drivers.driverRef, Drivers.code, Drivers.forename, Drivers.surname,
     Races.name, Races.round, Races.year, Races.date,
     Constructors.name, Constructors.constructorRef, Constructors.nationality
    FROM Results
@@ -246,7 +246,8 @@ public function getRaceIdAPI($raceId){
 }
 public function getDriverRefAPI($driverRef){
    $sql= 
-   "SELECT *
+   "SELECT Drivers.driverRef, Drivers.number, Drivers.code, Drivers.forename, Drivers.surname,
+   Drivers.dob, Drivers.nationality, Drivers.url
    FROM Results
    INNER JOIN Drivers ON Drivers.driverId = Results.driverId
    INNER JOIN Races ON Races.raceId = Results.raceId
