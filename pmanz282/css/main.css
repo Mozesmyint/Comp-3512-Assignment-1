@@ -38,6 +38,9 @@ a {
 nav a{
     color: white;
 }
+li{
+    list-style: none;
+}
 
 a:hover {
     background-color: #ccc;
@@ -56,6 +59,7 @@ body {
     flex: 1;
     padding: 20px;
     border: 1px solid black;
+    max-width: 40%;
 }
 
 .container {

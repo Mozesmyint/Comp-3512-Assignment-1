@@ -24,6 +24,7 @@ $raceGateway = new RacesDB($conn);
 <body>
     <header>
         <img class="logo" src="./Includes/images/f1_logo.png" alt="logo">
+        
         <h2>F1 Dashboard Project</h2>
         <nav>
             <!-- Home button -->
@@ -40,16 +41,17 @@ $raceGateway = new RacesDB($conn);
             </a>
         </nav>
     </header>
-
+    
     <div class="container">
         <div class="leftcolumn">
             <h2>2022 Races</h2>
+            <!-- Paragraph  -->
             <ul>
                 <?php
                 foreach ($race as $r) { ?>
                     <li>
-                        <span>Round <?= $r['round']; ?>: <?= $r['name']; ?></span>
-                        <a href="browse.php?raceId=<?= $r['raceId']; ?>" class="resultsBTN">Results</a>
+                        <a href="browse.php?raceId=<?= $r['raceId']; ?>" 
+                        class="resultsBTN">Round <?= $r['round']; ?>: <?= $r['name']; ?></a>
                     </li>
                 <?php } ?>
             </ul>

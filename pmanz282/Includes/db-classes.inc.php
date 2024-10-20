@@ -156,61 +156,53 @@ public function getCircuitRef($circuitRef) {
 class RacesDB{
 private static $baseSQL = 
 "
-SELECT raceId, year, round, circuitId
+SELECT %s
 FROM Races
-INNER JOIN Circuits ON Races.circuitId = Circuits.circuitId
-INNER JOIN Qualifying ON Races.raceId = Qualifying.raceId
-INNER JOIN Results ON Races.raceId = Results.raceId
-";
+%s
+WHERE Races.year = 2022 %s
+%s";
 
 private $pdo;
 public function __construct($connection){
    $this->pdo = $connection;
 }
 public function getAll() { 
-   $sql = self::$baseSQL; 
-   $statement = 
-      DatabaseHelper::runQuery($this->pdo, $sql, null); 
-   return $statement->fetchAll(); 
-   } 
-public function getAllUniqRaces(){
-   $sql = 
-   "SELECT DISTINCT Races.raceId, Races.name FROM Drivers
-   INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
-   INNER JOIN Races ON Qualifying.raceId = Races.raceId
-   INNER JOIN ConstructorResults ON ConstructorResults.constructorId =  Qualifying.constructorId
-   INNER JOIN Seasons ON Races.year = Seasons.year
-   WHERE Seasons.year = 2022 ORDER BY Races.round";
-   $statement = DatabaseHelper::runQuery($this->pdo,$sql,null);
-   return $statement->fetchAll(PDO::FETCH_ASSOC);
+   $selectSQL =" Races.name, Races.round, Races.year, Races.date ";
+   $orderSQL =" ORDER BY Races.round";
+   $sql = sprintf(self::$baseSQL, $selectSQL, "", "",$orderSQL);
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, null); 
+   return $statement->fetchAll(PDO::FETCH_ASSOC); 
+} 
+
+public function getRacesRef($raceId){
+   $selectSQL = " Circuits.name, Circuits.location, Circuits.country ";
+   $joinSQL =" INNER JOIN Circuits ON Races.circuitId = Circuits.circuitId ";
+   $whereSQL =" AND Races.raceId = ? ";
+   $sql = sprintf(self::$baseSQL, $selectSQL, $joinSQL, $whereSQL,"");
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, $raceId); 
+   return $statement->fetch(PDO::FETCH_ASSOC); 
 }
 }
 class QualifyingDB{
 private static $baseSQL = 
-"
-SELECT * 
-FROM Qualifying 
-INNER JOIN Drivers ON Qualifying.driverId = Drivers.driverId
-INNER JOIN Races ON Qualifying.raceId = Races.raceId
-INNER JOIN Constructors ON Constructors.constructorId = 
-Qualifying.constructorId;
+"SELECT Qualifying.q1, Qualifying.q2,Qualifying.q3 
+   FROM Qualifying
+   INNER JOIN Races ON Races.raceId = Qualifying.raceId
+   INNER JOIN Results ON Races.raceId = Results.raceId
+   %s
+   GROUP BY Qualifying.position
 ";
-
 private $pdo;
 public function __construct($connection){
    $this->pdo = $connection;
 }
-public function getQualifyingRef($qualifyingRef) {
-   $sql = self::$baseSQL . " WHERE qualifyingId = ?";
-   $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($qualifyingRef));
-   return $statement->fetchAll();
+public function getQualifyingRef($raceId) {
+   //Inspiration to use sprintf, https://www.w3schools.com/php/func_string_sprintf.asp
+   $whereSQL =" WHERE Races.raceId = ? ";
+   $Stringsql =sprintf(self::$baseSQL, $whereSQL);
+   $statement = DatabaseHelper::runQuery($this->pdo, $Stringsql, $raceId);
+   return $statement->fetchALL(PDO::FETCH_ASSOC);
 }
-public function getAll() { 
-   $sql = self::$baseSQL; 
-   $statement = 
-      DatabaseHelper::runQuery($this->pdo, $sql, null); 
-   return $statement->fetchAll(); 
-   } 
 }
 class ResultsDB{
 private static $baseSQL = 
@@ -224,6 +216,7 @@ LEFT JOIN qualifying ON results.raceId = qualifying.raceId AND results.driverId 
 WHERE results.raceId = :raceId";
 
 private $pdo;
+
 public function __construct($connection){
    $this->pdo = $connection;
 }
@@ -231,6 +224,41 @@ public function getAll($raceId) {
    $sql = self::$baseSQL; 
    $statement = DatabaseHelper::runQuery($this->pdo, $sql, array($raceId)); 
    return $statement->fetchAll(PDO::FETCH_ASSOC); 
-   } 
+   }
+public function getRaceIdAPI($raceId){
+   /*driverRef, code, forename, surname
+   name, round, year, date
+   name, constructorRef, nationality
+   */
+   $sql =
+   "SELECT 
+    Races.raceId, Drivers.driverRef, Drivers.code, Drivers.forename, Drivers.surname,
+    Races.name, Races.round, Races.year, Races.date,
+    Constructors.name, Constructors.constructorRef, Constructors.nationality
+   FROM Results
+   INNER JOIN Drivers ON Drivers.driverId = Results.driverId
+   INNER JOIN Races ON Races.raceId = Results.raceId
+   INNER JOIN Constructors ON Constructors.constructorId = Results.constructorId
+   WHERE Races.year = 2022 AND Races.raceId = ?
+   ORDER BY Results.grid
+   ";
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, $raceId);
+   return $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+public function getDriverRefAPI($driverRef){
+   $sql= 
+   "SELECT *
+   FROM Results
+   INNER JOIN Drivers ON Drivers.driverId = Results.driverId
+   INNER JOIN Races ON Races.raceId = Results.raceId
+   WHERE Races.year = 2022 AND Drivers.driverRef = ?
+   ";
+   $statement = DatabaseHelper::runQuery($this->pdo, $sql, $driverRef);
+   return $statement->fetchALL(PDO::FETCH_ASSOC);
+}
+
+
+
+
 }
 ?>

@@ -11,10 +11,8 @@ header("Access-Control-Allow-Origin: *");
 try {
     $conn = DatabaseHelper::createConnection(array(DBCONNSTRING, DBUSER, DBPASS));
     $qualifyingGateway = new QualifyingDB($conn);
-    if (isCorrectQueryStringInfo("qualifyingId")) {
-        $qualifying = $qualifyingGateway->getQualifyingRef($_GET["qualifyingId"]);
-    } else {
-        $qualifying = $qualifyingGateway->getAll();
+    if (isCorrectQueryStringInfo("raceId")) {
+        $qualifying = $qualifyingGateway->getQualifyingRef($_GET["raceId"]);
     }
     echo json_encode($qualifying, JSON_NUMERIC_CHECK);
 } catch (Exception $e) {

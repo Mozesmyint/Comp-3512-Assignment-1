@@ -31,6 +31,21 @@
         <div class="leftcolumn">
             <div class="desc">
             </div>
+            <!-- Used Chatgpt for following paragraph  -->
+             
+            <p>🏎️ Welcome to the Ultimate F1 Experience! 🏁</p>
+            <p>
+                Get ready to rev your engines and dive into the thrilling world of Formula 1! Here, 
+                we bring you the latest on jaw-dropping races, legendary drivers, and powerhouse constructors. 
+                Whether you're a die-hard fan or a curious newcomer, our comprehensive race results and in-depth 
+                analyses will keep you on the edge of your seat!
+            </p>
+            
+            <p>
+                Join us as we celebrate the speed, strategy, and spectacle that makes F1 the pinnacle of motorsport. 
+                Buckle up and explore every twist and turn of the season—your front-row seat to all things F1 awaits! 🏆✨
+            </p>
+            
             <a href="browse.php"> <!--To be changed when page is made-->
                 Browse 2022 Season
             </a>
