@@ -21,7 +21,7 @@
                 Browse
             </a>
             <!-- APIs button -->
-            <a href="APIsPage.php"> <!--To be changed when page is made-->
+            <a href="APIsPage.php">
                 APIs
             </a>
         </nav>
@@ -46,7 +46,7 @@
                 Buckle up and explore every twist and turn of the season—your front-row seat to all things F1 awaits! 🏆✨
             </p>
             
-            <a href="browse.php"> <!--To be changed when page is made-->
+            <a href="browse.php">
                 Browse 2022 Season
             </a>
         </div>

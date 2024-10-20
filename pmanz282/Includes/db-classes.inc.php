@@ -77,7 +77,7 @@ public function getAllForRace($identifier){
          INNER JOIN ConstructorResults ON Races.raceId = ConstructorResults.raceId
          INNER JOIN Seasons ON Races.year = Seasons.year
    WHERE 
-      Races.raceId = ?
+      Races.year = 2022 AND Drivers.driverRef = ?
    GROUP BY Races.round, Circuits.name, results.position 
    ORDER BY Races.round";
    //If using DISTINCT, values in select must be repeated in group by or aggregated
