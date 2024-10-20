@@ -46,17 +46,16 @@ class DatabaseHelper {
 } 
 class DriversDB{
 private static $baseSQL = 
-"SELECT Drivers.url AS dURL, * FROM Drivers 
+"SELECT Drivers.forename, Drivers.surname, Drivers.dob, Drivers.nationality, Drivers.url AS dURL FROM Drivers 
    INNER JOIN Qualifying ON Drivers.driverId = Qualifying.driverId
    INNER JOIN Races ON Qualifying.raceId = Races.raceId
-   INNER JOIN ConstructorResults ON ConstructorResults.constructorId =  Qualifying.constructorId
-   INNER JOIN Seasons ON Races.year = Seasons.year ";
+   ";
 private $pdo;
 public function __construct($connection){
    $this->pdo = $connection;
 }
-public function getAll() { 
-   $sql = self::$baseSQL; 
+public function getAllAPI() { 
+   $sql = self::$baseSQL. " WHERE Races.year = 2022 "; 
    $statement = 
       DatabaseHelper::runQuery($this->pdo, $sql, null); 
    return $statement->fetchAll(); 
